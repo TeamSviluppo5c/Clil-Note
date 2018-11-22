@@ -39,8 +39,5 @@ public class Note {
         this.description=description;
         data=new Date();
     }
-    String description;
-    
-    
-    
+    String description;         
 }
