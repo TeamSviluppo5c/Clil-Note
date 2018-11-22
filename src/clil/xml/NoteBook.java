@@ -7,20 +7,29 @@ package clil.xml;
 
 import java.util.ArrayList;
 import java.util.Date;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author SSLAVIERO
  */
+@XmlRootElement
 public class NoteBook {
+    
     ArrayList<Note> notes=new ArrayList();
+    
+    @XmlElement
+    public ArrayList<Note> getNotes() {
+        return notes;
+    }
     ArrayList<Note> notes_word=new ArrayList();
     ArrayList<Note> notes_date=new ArrayList();
     Date data =new Date();
     
     public void AddNote(String description)
     {
-        notes.add(new Note(description+data.getDay()+(data.getMonth()+1)+(data.getYear()+1900)));
+        notes.add(new Note(description));
     }
     
     public void AddNote(Note t)

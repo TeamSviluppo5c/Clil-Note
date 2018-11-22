@@ -18,7 +18,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Note {
 
     Date data;
-
+    
+    @XmlElement
     public Date getData() {
         return data;
     }
@@ -39,5 +40,7 @@ public class Note {
         this.description=description;
         data=new Date();
     }
+    
+    public Note(){}
     String description;         
 }

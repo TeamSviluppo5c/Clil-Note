@@ -23,7 +23,7 @@ public class EverNote extends javax.swing.JFrame {
      * Creates new form EverNote
      */
     
-    EverNote ok=new EverNote();
+    Note ok=new Note();
     public EverNote() {
         initComponents();
         Init();
@@ -107,7 +107,7 @@ public class EverNote extends javax.swing.JFrame {
             m1.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
             File f1=new File("listNote.xml");
-            m1.marshal(ok , f1);
+            m1.marshal(Note , f1);
         } catch (JAXBException ex) {
             Logger.getLogger(EverNote.class.getName()).log(Level.SEVERE, null, ex);
         }
