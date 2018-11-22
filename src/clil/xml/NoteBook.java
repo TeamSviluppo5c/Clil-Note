@@ -54,5 +54,6 @@ public class NoteBook {
         }
         return notes_word;
     }
-    
+    //Team--->Git---->Initialize repository(inizializzo il deposito dove salvo i file)
+    //Team--->Commit---> salvo effettivamente il file che poi posso aggiornare
 }
