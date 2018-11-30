@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -19,6 +20,7 @@ import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import serverclil.xml.jDialog1;
 
 /**
  *
@@ -44,7 +46,6 @@ public class EverNote extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDialog1 = new javax.swing.JDialog();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         list1 = new java.awt.List();
@@ -52,17 +53,6 @@ public class EverNote extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-
-        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
-        jDialog1.getContentPane().setLayout(jDialog1Layout);
-        jDialog1Layout.setHorizontalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 348, Short.MAX_VALUE)
-        );
-        jDialog1Layout.setVerticalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 213, Short.MAX_VALUE)
-        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -84,6 +74,11 @@ public class EverNote extends javax.swing.JFrame {
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Descrizione...");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
@@ -124,20 +119,21 @@ public class EverNote extends javax.swing.JFrame {
         
             Note nota=new Note(jTextField1.getText());
 
-        
-         JAXBContext jb;
+            JAXBContext jb;
         try {        
             jb = JAXBContext.newInstance(Note.class);
             Marshaller m1=jb.createMarshaller();
 
-
             try {
             ltclient = new Socket(ip,9090);
             PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(ltclient.getOutputStream())), true);
-            
-            m1.marshal(nota,out);
+            StringWriter sw = new StringWriter();
+            m1.marshal(nota,sw);
+            sw.append("#1");
+            out.println(sw.toString());
             
             ltclient.close();  
+            
         } catch (IOException ex) {
             Logger.getLogger(EverNote.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -152,6 +148,28 @@ public class EverNote extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        
+        try {
+            
+            ltclient = new Socket(ip,9090);
+            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(ltclient.getOutputStream())), true);
+            jDialog1 d=new jDialog1(this,true);
+            d.setVisible(true);
+            out.append(d.descr());
+            out.append("#2");
+            
+            out.println();
+            ltclient.close();  
+            
+        } catch (IOException ex) {
+           Logger.getLogger(EverNote.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -193,7 +211,6 @@ public class EverNote extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JDialog jDialog1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;

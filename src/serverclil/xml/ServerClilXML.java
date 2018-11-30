@@ -31,6 +31,7 @@ public class ServerClilXML {
     public static void main(String[] args) {
 
         NoteBook note=new NoteBook();
+        NoteBook notedescr=new NoteBook();
         
        try {        
        JAXBContext jc = JAXBContext.newInstance(Note.class);
@@ -44,10 +45,29 @@ public class ServerClilXML {
                     BufferedReader input = new BufferedReader(new InputStreamReader(latoclient.getInputStream()));
                     String risposta = input.readLine();
                     System.out.println(risposta);
+                    String[] risposte=risposta.split("#");
                     
-                    StringReader reader = new StringReader(risposta);
-                    Note o = (Note) u.unmarshal(reader);
-                    note.AddNote(o);
+                    if(risposte[1].compareTo("1")==0)
+                    {
+                        StringReader reader = new StringReader(risposte[0]);
+                        Note o = (Note) u.unmarshal(reader);
+                        note.AddNote(o);
+                    }
+                    
+                    if(risposte[1].compareTo("2")==0)
+                    {
+                        for(Note nota:note.getNotes())
+                        {
+                            if(nota.getDescription().compareTo(risposte[0])==0)
+                            {
+                                notedescr.AddNote(nota);
+                            }
+                        }
+                        
+                    }
+                    
+                    
+
                 }                
             }
                     
