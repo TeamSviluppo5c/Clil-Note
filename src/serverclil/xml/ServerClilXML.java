@@ -30,8 +30,9 @@ public class ServerClilXML {
      */
     public static void main(String[] args) {
 
+        NoteBook note=new NoteBook();
         
-        try {        
+       try {        
        JAXBContext jc = JAXBContext.newInstance(Note.class);
        Unmarshaller u = jc.createUnmarshaller();
 
@@ -46,6 +47,7 @@ public class ServerClilXML {
                     
                     StringReader reader = new StringReader(risposta);
                     Note o = (Note) u.unmarshal(reader);
+                    note.AddNote(o);
                 }                
             }
                     

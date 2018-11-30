@@ -20,7 +20,7 @@ public class Note {
     Date data;
     
     @XmlElement
-    public Date getData() {
+    public  Date getData() {
         return data;
     }
 
@@ -38,7 +38,7 @@ public class Note {
 
     public Note(String description) {
         this.description=description;
-        data=new Date();
+        this.data=new Date();
     }
     
     public Note(){}
