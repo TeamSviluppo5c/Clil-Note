@@ -107,13 +107,16 @@ Date data;
         
         data = new Date();
         data.setYear(Integer.parseInt(jTextField1.getText()));
-        data.setMonth(Integer.parseInt(jTextField2.getText()));
+        data.setMonth(Integer.parseInt(jTextField2.getText())-1);
         data.setDate(Integer.parseInt(jTextField3.getText()));
+        dispose();
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public Date date(){
-        return data;
+    public String date(){
+        String ciao="";
+        ciao+=data.getYear()+"-"+data.getMonth()+"-"+data.getDate();
+        return ciao;
     }
     
     /**

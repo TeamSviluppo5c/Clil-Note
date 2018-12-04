@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package serverclil.xml;
+package clil.xml;
 
+import serverclil.xml.*;
 import serverclil.xml.Note;
 import java.util.ArrayList;
 import java.util.Date;

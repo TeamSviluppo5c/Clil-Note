@@ -12,7 +12,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.StringReader;
 import java.io.StringWriter;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -20,6 +22,7 @@ import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 /**
  *
@@ -31,9 +34,20 @@ public class EverNote extends javax.swing.JFrame {
      * Creates new form EverNote
      */
     
-
+Unmarshaller u;
+NoteBook notedescr;
     public EverNote() {
         initComponents();
+        JAXBContext jc;
+        notedescr=new NoteBook();
+        
+        try {
+            jc = JAXBContext.newInstance(serverclil.xml.NoteBook.class);
+             u= jc.createUnmarshaller();
+        } catch (JAXBException ex) {
+            Logger.getLogger(EverNote.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     /**
@@ -131,6 +145,9 @@ public class EverNote extends javax.swing.JFrame {
             sw.append("#1");
             out.println(sw.toString());
             
+            
+            
+            
             ltclient.close();  
             
         } catch (IOException ex) {
@@ -151,11 +168,31 @@ public class EverNote extends javax.swing.JFrame {
             PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(ltclient.getOutputStream())), true);
             jDialog2 d2=new jDialog2(this,true);
             d2.setVisible(true);
-            out.append(d2.date().toString());
+            out.append(d2.date());
             out.append("#3");
             
             out.println();
-            ltclient.close();  
+            
+            
+            list1.removeAll();
+            BufferedReader input = new BufferedReader(new InputStreamReader(ltclient.getInputStream()));
+            String risposta = input.readLine();
+            
+            StringReader reader = new StringReader(risposta);
+            
+            System.out.println(risposta);
+            serverclil.xml.NoteBook o=new serverclil.xml.NoteBook();
+            try {
+                o = (serverclil.xml.NoteBook) u.unmarshal(reader);
+
+            } catch (JAXBException ex) {
+                Logger.getLogger(EverNote.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            for(serverclil.xml.Note nota:o.getNotes())
+            {
+                list1.add(nota.getDescription()+"   "+nota.getData().toString());
+            }
             
         } catch (IOException ex) {
            Logger.getLogger(EverNote.class.getName()).log(Level.SEVERE, null, ex);
@@ -176,7 +213,31 @@ public class EverNote extends javax.swing.JFrame {
             out.append("#2");
             
             out.println();
-            ltclient.close();  
+            
+            
+            
+           
+            list1.removeAll();
+            BufferedReader input = new BufferedReader(new InputStreamReader(ltclient.getInputStream()));
+            String risposta = input.readLine();
+            
+            StringReader reader = new StringReader(risposta);
+            
+            System.out.println(risposta);
+            serverclil.xml.NoteBook o=new serverclil.xml.NoteBook();
+            try {
+                o = (serverclil.xml.NoteBook) u.unmarshal(reader);
+
+            } catch (JAXBException ex) {
+                Logger.getLogger(EverNote.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            for(serverclil.xml.Note nota:o.getNotes())
+            {
+                list1.add(nota.getDescription()+"    "+nota.getData().toString());
+            }
+            
+            
             
         } catch (IOException ex) {
            Logger.getLogger(EverNote.class.getName()).log(Level.SEVERE, null, ex);
@@ -222,6 +283,7 @@ public class EverNote extends javax.swing.JFrame {
     Note Note;
     String ip="127.0.0.1";
     Socket ltclient;
+    ServerSocket latoServer;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
