@@ -35,11 +35,11 @@ public class EverNote extends javax.swing.JFrame {
      */
     
 Unmarshaller u;
-NoteBook notedescr;
+
     public EverNote() {
         initComponents();
         JAXBContext jc;
-        notedescr=new NoteBook();
+
         
         try {
             jc = JAXBContext.newInstance(serverclil.xml.NoteBook.class);
@@ -129,6 +129,7 @@ NoteBook notedescr;
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        //INSERIMENTO NOTA SUL SERVER
         
             Note nota=new Note(jTextField1.getText());
 
@@ -162,6 +163,7 @@ NoteBook notedescr;
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
+        //RICERCA PER DATA
         try {
             
             ltclient = new Socket(ip,9090);
@@ -202,7 +204,7 @@ NoteBook notedescr;
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-        
+        //RICERCA PER DESCRIZIONE
         try {
             
             ltclient = new Socket(ip,9090);
