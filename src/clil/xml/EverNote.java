@@ -145,6 +145,21 @@ public class EverNote extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
+        try {
+            
+            ltclient = new Socket(ip,9090);
+            PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(ltclient.getOutputStream())), true);
+            jDialog2 d2=new jDialog2(this,true);
+            d2.setVisible(true);
+            out.append(d2.date().toString());
+            out.append("#3");
+            
+            out.println();
+            ltclient.close();  
+            
+        } catch (IOException ex) {
+           Logger.getLogger(EverNote.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
