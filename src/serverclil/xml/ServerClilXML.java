@@ -58,7 +58,7 @@ public class ServerClilXML {
                     {
                         for(Note nota:note.getNotes())
                         {
-                            if(nota.getDescription().compareTo(risposte[0])==0)
+                            if(nota.getDescription().contains(risposte[0]))
                             {
                                 notedescr.AddNote(nota);
                             }
